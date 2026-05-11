@@ -1,0 +1,51 @@
+<div class="layout">
+
+  <!-- Sidebar -->
+  <app-side-bar *ngIf="showSidebar"></app-side-bar>
+
+  <div class="main-wrapper">
+
+    <!-- Top Navbar -->
+    <header *ngIf="showTopNavbar" class="top-navbar d-flex justify-content-end align-items-center px-4">
+      <div class="nav-right d-flex align-items-center gap-4">
+        
+        <!-- Notification -->
+        <div class="notification-icon position-relative">
+          <i class="bi bi-bell-fill fs-5"></i>
+          <span class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle">
+          </span>
+        </div>
+
+        <!-- User Dropdown -->
+        <div class="dropdown">
+          <a class="d-flex align-items-center text-decoration-none dropdown-toggle user-link" 
+             href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person-circle fs-4 me-2"></i>
+               <span class="user-name fw-bold">{{ venderCode }}</span> 
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="userDropdown">
+            <li>
+              <a class="dropdown-item py-2" routerLink="/dashboard">
+                <i class="bi bi-person me-2"></i> My Account
+              </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <a class="dropdown-item py-2 text-danger" (click)="logout()">
+                <i class="bi bi-box-arrow-right me-2"></i> Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="page-content">
+      <router-outlet></router-outlet>
+    </main>
+
+  </div>
+</div>

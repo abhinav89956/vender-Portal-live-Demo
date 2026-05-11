@@ -1,0 +1,132 @@
+<div class="sidebar" *ngIf="showSidebar">
+
+ 
+  <!-- Profile -->
+  <div class="profile-section text-center">
+    <div class="profile-icon-container">
+      <i class="bi bi-person-circle"></i>
+    </div>
+    <h5 class="profile-name">{{ venderCode }}</h5>
+  </div>
+
+  <!-- Menu -->
+  <ul class="menu list-unstyled">
+
+    <!-- Dashboard -->
+    <li>
+      <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <i class="bi bi-house"></i> Dashboard
+      </a>
+    </li>
+
+    <!-- Items -->
+    <li>
+      <a routerLink="/item" routerLinkActive="active">
+        <i class="bi bi-grid"></i> Items
+      </a>
+    </li>
+
+    <!-- Vendors -->
+    <li *ngIf="isAdmin">
+      <a routerLink="/vendor" routerLinkActive="active">
+        <i class="bi bi-people"></i> Vendors
+      </a>
+    </li>
+
+    <!-- Barcode Menu -->
+    <li>
+
+      <a href="javascript:void(0)"
+         (click)="toggleBarcodeMenu()"
+         class="d-flex justify-content-between align-items-center"
+         [class.active]="isBarcodeRouteActive">
+
+        <span>
+          <i class="bi bi-upc-scan"></i> Barcode
+        </span>
+
+        <i class="bi"
+           [ngClass]="barcodeMenuOpen ? 'bi-chevron-down' : 'bi-chevron-right'">
+        </i>
+      </a>
+
+      <ul *ngIf="barcodeMenuOpen" class="submenu list-unstyled">
+
+        <li>
+          <a routerLink="/barcode" routerLinkActive="active">
+            New Barcode
+          </a>
+        </li>
+
+        <li>
+          <a routerLink="/barcodelist" routerLinkActive="active">
+            Barcode List
+          </a>
+        </li>
+
+      </ul>
+    </li>
+
+  
+<li>
+
+  <a href="javascript:void(0)"
+     (click)="toggleChatMenu()"
+     class="d-flex justify-content-between align-items-center"
+     [class.active]="isChatRouteActive">
+
+    <span>
+      <i class="bi bi-chat-dots"></i> Chat
+    </span>
+
+    <i class="bi"
+       [ngClass]="chatMenuOpen ? 'bi-chevron-down' : 'bi-chevron-right'">
+    </i>
+  </a>
+
+  <ul *ngIf="chatMenuOpen" class="submenu list-unstyled">
+
+  
+    <li>
+      <a routerLink="/chat" routerLinkActive="active">
+        <i class="bi bi-chat-left-text"></i> Chat Window
+      </a>
+    </li>
+
+  </ul>
+
+</li>
+    <!-- Settings Menu -->
+    <li>
+
+      <a href="javascript:void(0)"
+         (click)="toggleSettingMenu()"
+         class="d-flex justify-content-between align-items-center"
+         [class.active]="isSettingRouteActive">
+
+        <span>
+          <i class="bi bi-gear-fill"></i> Settings
+        </span>
+
+        <i class="bi"
+           [ngClass]="settingMenuOpen ? 'bi-chevron-down' : 'bi-chevron-right'">
+        </i>
+      </a>
+
+      <ul *ngIf="settingMenuOpen" class="submenu list-unstyled">
+
+        <li>
+          <a routerLink="/setting" routerLinkActive="active">
+            Update Setting
+          </a>
+        </li>
+
+        
+       
+
+      </ul>
+    </li>
+
+  </ul>
+
+</div>

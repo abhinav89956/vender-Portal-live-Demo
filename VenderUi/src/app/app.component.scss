@@ -1,0 +1,33 @@
+.layout {
+  display: flex;
+  height: 100vh;      /* Full screen height */
+  overflow: hidden;   /* No outer scroll */
+}
+
+app-side-bar {
+  width: 220px;
+  flex-shrink: 0;
+  height: 100%;
+}
+
+.main-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #f4f7f9;
+  overflow: hidden;    /* Prevent scroll here */
+}
+
+.top-navbar {
+  height: 60px;
+  flex-shrink: 0;      /* Fix navbar height */
+  background: white;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.page-content {
+  flex: 1;            /* Take remaining space */
+  overflow: hidden;   /* No scroll here */
+  display: flex;
+  flex-direction: column;
+}

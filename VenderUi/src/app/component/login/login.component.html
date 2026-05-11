@@ -1,0 +1,72 @@
+<div class="login-container">
+
+  <!-- Left Logo Panel -->
+  <div class="login-left">
+    <p class="tagline">Welcome to Vender Portal</p>
+  </div>
+
+  <!-- Right Login Form -->
+  <div class="login-right">
+    <div class="form-wrapper">
+
+      <div class="form-header">
+        <i class="icon-user"></i>
+        <h2>Login</h2>
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+
+        <!-- Email -->
+        <div class="form-group">
+          <input
+            type="email"
+            placeholder="Email"
+            formControlName="email"
+          />
+
+          <div class="text-danger" *ngIf="submitted && f['email'].errors">
+            <small *ngIf="f['email'].errors?.['required']">
+              Email is required.
+            </small>
+
+            <small *ngIf="f['email'].errors?.['email']">
+              Invalid email format.
+            </small>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <input
+            type="password"
+            placeholder="Password"
+            formControlName="password"
+          />
+
+          <div class="text-danger" *ngIf="submitted && f['password'].errors">
+            <small *ngIf="f['password'].errors?.['required']">
+              Password is required.
+            </small>
+          </div>
+        </div>
+
+        <!-- Forgot Password -->
+        <div class="forgot-password">
+          <a routerLink="/forget">Forgot Password?</a>
+        </div>
+
+        <!-- Button -->
+        <button type="submit" class="login-btn">
+          {{ loading ? 'Please wait...' : 'Login' }}
+        </button>
+
+        <!-- Signup -->
+        <p class="signup-text">
+          Don't have an account?
+          <a routerLink="/signup">Signup</a>
+        </p>
+
+      </form>
+    </div>
+  </div>
+</div>

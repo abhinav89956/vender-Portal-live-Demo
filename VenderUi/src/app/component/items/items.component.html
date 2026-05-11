@@ -1,0 +1,119 @@
+<div class="items-container">
+  <div class="header-section d-flex justify-content-between align-items-center mb-4">
+    <h2>Items</h2>
+  </div>
+
+  <!-- Action Bar -->
+  <div class="action-bar card p-3 mb-4 shadow-sm">
+    <div class="toolbar-content d-flex justify-content-between align-items-center">
+      <form [formGroup]="searchForm" class="search-group d-flex gap-2" (ngSubmit)="onSearch()">
+        <select class="form-select" formControlName="searchItemCode">
+          <option value="">Select Item Code</option>
+          <option *ngFor="let item of itemList" [value]="item.ItemCode">{{ item.ItemCode }}</option>
+        </select>
+        <button type="submit" class="btn btn-primary px-4">Search</button>
+        <button type="button" class="btn btn-secondary px-3" (click)="onRefresh()">
+          <i class="fa fa-refresh"></i>
+        </button>
+      </form>
+
+      <button class="btn btn-dark" (click)="resetForm()" data-bs-toggle="modal" data-bs-target="#itemModal">
+        <i class="fa fa-plus me-2"></i> Add New Item
+      </button>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-container card shadow-sm">
+    <table class="table custom-table ">
+      <thead class="table-light">
+        <tr>
+          <th style="width: 20%;">Item Code</th>
+          <th style="width: 45%;">Item Description</th>
+          <th style="width: 20%;">UPC</th>
+          <th style="width: 15%; text-align: center;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of itemList">
+          <td class="fw-bold text-primary">{{ item.ItemCode }}</td>
+          <td>{{ item.ItemDescription }}</td>
+          <td>{{ item.UPC }}</td>
+          <td class="text-center">
+            <button class="btn btn-sm btn-outline-primary me-2" (click)="onEdit(item)">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-danger" (click)="onDelete(item.ItemID)">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="itemList.length === 0">
+          <td colspan="4" class="text-center text-muted">No items found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="d-flex justify-content-between align-items-center mt-3">
+    <div>
+      <select class="form-select" [value]="pageSize" (change)="onPageSizeChange($event)">
+        <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
+      </select>
+    </div>
+    <div>
+      <button class="btn btn-sm btn-outline-primary me-1" (click)="onPageChange(pageNumber - 1)" [disabled]="pageNumber === 1">Prev</button>
+
+      <button class="btn btn-sm btn-outline-primary me-1" 
+              *ngFor="let p of getPages()" 
+              [class.active]="p === pageNumber" 
+              (click)="onPageChange(p)">
+        {{ p }}
+      </button>
+
+      <button class="btn btn-sm btn-outline-primary" (click)="onPageChange(pageNumber + 1)" [disabled]="pageNumber === totalPages()">Next</button>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="itemModal" tabindex="-1" aria-labelledby="itemModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-header bg-light">
+          <h5 class="modal-title fw-bold" id="itemModalLabel">{{ isEditMode ? 'Update Item' : 'Add Item' }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()"></button>
+        </div>
+
+        <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+          <div class="modal-body p-4">
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Item Code<span class="text-danger">*</span></label>
+              <input type="text" class="form-control" formControlName="itemCode"
+                [class.is-invalid]="itemForm.get('itemCode')?.invalid && itemForm.get('itemCode')?.touched" placeholder="Enter Item Code">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Item Description</label>
+              <textarea class="form-control" formControlName="itemDescription" rows="3" placeholder="Enter Description"></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">UPC<span class="text-danger">*</span></label>
+              <input type="text" class="form-control" formControlName="upc"
+                [class.is-invalid]="itemForm.get('upc')?.invalid && itemForm.get('upc')?.touched" placeholder="Enter UPC Number">
+              <small class="text-danger" *ngIf="itemForm.get('upc')?.errors?.['pattern']">Only numbers are allowed.</small>
+            </div>
+          </div>
+
+          <div class="modal-footer bg-light border-0">
+            <button type="submit" class="btn btn-primary px-4" [disabled]="itemForm.invalid">
+              {{ isEditMode ? 'Update' : 'Save' }}
+            </button>
+            <button type="button" class="btn btn-danger px-4" data-bs-dismiss="modal" (click)="resetForm()">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

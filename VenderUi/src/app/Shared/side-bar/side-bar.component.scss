@@ -1,0 +1,140 @@
+/* ==============================
+   Sidebar Host
+============================== */
+
+:host {
+  display: block;
+}
+
+/* ==============================
+   Sidebar Styling
+============================== */
+
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  background-color: #1c2b4a;
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==============================
+   Logo Section
+============================== */
+
+.logo {
+  background: #fff;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.logo img {
+  width: 180px;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ==============================
+   Profile Section
+============================== */
+
+.profile-section {
+  padding: 15px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-icon-container i {
+  font-size: 35px;
+}
+
+.profile-name {
+  font-size: 15px;
+  margin: 0;
+}
+
+/* ==============================
+   Menu Styling
+============================== */
+
+.menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-grow: 1;
+}
+
+.menu li a {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 14px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.menu li a i {
+  margin-right: 12px;
+  font-size: 16px;
+}
+
+.menu li a:hover,
+.menu li a.active {
+  background-color: #0d1b3a;
+  color: #fff;
+}
+
+/* ==============================
+   Responsive Sidebar
+============================== */
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 60px;
+  }
+
+  .profile-name,
+  .logo img {
+    display: none;
+  }
+
+  .menu li a {
+    justify-content: center;
+    padding: 12px 10px;
+  }
+
+  .menu li a i {
+    margin: 0;
+  }
+}
+.submenu {
+  padding-left: 25px;
+  margin-top: 5px;
+
+  li {
+    margin: 6px 0;
+  }
+
+  a {
+    font-size: 14px;
+    color: #bfc9d4;
+    text-decoration: none;
+
+    &:hover {
+      color: white;
+    }
+
+    &.active {
+      color: white;
+      font-weight: 500;
+    }
+  }
+}

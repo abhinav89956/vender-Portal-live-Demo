@@ -1,0 +1,202 @@
+<div class="container py-5">
+  <div class="card shadow-lg p-4 mx-auto"
+       style="max-width:700px; border-radius:12px;">
+
+    <h3 class="mb-3 text-primary text-center">
+      Barcode Generator
+    </h3>
+
+  
+    <div *ngIf="currentStep === 1">
+
+      <form [formGroup]="barcodeForm">
+
+<div class="mb-3" *ngIf="isAdmin">
+  <label class="form-label fw-bold">Vendor *</label>
+
+  <select class="form-select"
+          formControlName="venderCode">
+
+    <option value="">Select Vendor</option>
+
+    <option *ngFor="let v of vendors"
+            [value]="v.venderCode">
+      {{ v.venderCode }}
+    </option>
+
+  </select>
+</div>
+
+        <!-- Item -->
+        <div class="mb-3">
+          <label class="form-label fw-bold">Item *</label>
+
+          <select class="form-select"
+                  formControlName="itemCode"
+                  [class.disabled-dropdown]="!items.length">
+
+            <option value="">Select Item</option>
+
+            <option *ngFor="let i of items"
+                    [value]="i.itemCode">
+              {{ i.itemCode }}
+            </option>
+
+          </select>
+
+          <div *ngIf="isLoadingItems" class="text-primary mt-1 small">
+            Loading items...
+          </div>
+        </div>
+
+        <!-- Manufacturing Date -->
+        <div class="mb-3">
+          <label class="form-label fw-bold">
+            Manufacturing Date *
+          </label>
+
+          <input type="date"
+                 class="form-control"
+                 formControlName="manufacturingDate">
+        </div>
+
+        <!-- Buttons -->
+        <div class="text-center">
+          <button class="btn btn-primary btn-sm"
+                  type="button"
+                  (click)="submitStep1()">
+            Next →
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- ✅ STEP 2 -->
+    <div *ngIf="currentStep === 2">
+
+      <form [formGroup]="expiryForm">
+
+        <!-- Need Expiry -->
+        <div class="mb-3">
+          <label class="form-label fw-bold">
+            Need Expiry?
+          </label>
+
+          <div class="form-check">
+            <input class="form-check-input"
+                   type="radio"
+                   value="yes"
+                   formControlName="needExpiry">
+            <label class="form-check-label">Yes</label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input"
+                   type="radio"
+                   value="no"
+                   formControlName="needExpiry">
+            <label class="form-check-label">No</label>
+          </div>
+        </div>
+
+        <!-- Expiry Section -->
+        <div *ngIf="expiryForm.get('needExpiry')?.value === 'yes'"
+             class="mb-3">
+
+          <!-- Date Format -->
+          <label class="form-label fw-bold">
+            Date Format
+          </label>
+
+          <div class="form-check">
+            <input class="form-check-input"
+                   type="radio"
+                   value="yyyy/MM"
+                   formControlName="dateFormat">
+            <label class="form-check-label">
+              YYYY/MM
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input"
+                   type="radio"
+                   value="yyyy/MM/dd"
+                   formControlName="dateFormat">
+            <label class="form-check-label">
+              YYYY/MM/DD
+            </label>
+          </div>
+
+          <!-- Expiry Date -->
+          <label class="form-label fw-bold mt-2">
+            Expiry Date
+          </label>
+
+          <input type="date"
+                 class="form-control"
+                 formControlName="expiryDate"
+                 [min]="minExpiryDate">
+
+        </div>
+
+        <!-- Buttons -->
+        <div class="text-center">
+
+          <button class="btn btn-secondary btn-sm me-2"
+                  type="button"
+                  (click)="currentStep = 1">
+            Back
+          </button>
+
+          <button class="btn btn-primary btn-sm"
+                  type="button"
+                  (click)="submitStep2()">
+            Generate Barcode →
+          </button>
+
+        </div>
+
+      </form>
+    </div>
+
+    <!-- ✅ STEP 3 -->
+    <div *ngIf="currentStep === 3"
+         class="text-center">
+
+      <h5 class="text-success mb-2">
+        Barcode Generated
+      </h5>
+
+      <div class="small mb-2">
+        <div><strong>Vendor:</strong> {{ generatedVendor }}</div>
+        <div><strong>Item:</strong> {{ generatedItem }}</div>
+        <div><strong>VarCode:</strong> {{ generatedVarCode }}</div>
+      </div>
+
+      <!-- Barcode Image -->
+      <div class="mb-3" *ngIf="generatedBarcodeBase64">
+        <img
+          [src]="'data:image/png;base64,' + generatedBarcodeBase64"
+          alt="Barcode"
+          style="width:160px; height:auto;">
+      </div>
+
+      <!-- Buttons -->
+      <div>
+        <button class="btn btn-success btn-sm me-2"
+                (click)="downloadPdf()">
+          Download PDF
+        </button>
+
+        <button class="btn btn-secondary btn-sm"
+                (click)="restart()">
+          Generate Another
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+</div>

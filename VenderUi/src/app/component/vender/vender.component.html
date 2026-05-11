@@ -1,0 +1,215 @@
+<div class="container-fluid mt-3">
+
+  
+  <div class="d-flex justify-content-between mb-3">
+    <h3>Vendor Management</h3>
+    <button class="btn btn-primary" (click)="openAddForm()">
+      Add New Vendor
+    </button>
+  </div>
+
+  
+  <div class="card p-3 mb-3">
+    <form [formGroup]="searchForm">
+      <div class="row">
+
+        
+        <div class="col-md-3">
+          <label>Vendor Code</label>
+          <select class="form-control" formControlName="searchVenderCode">
+            <option value="">Select Vendor</option>
+            <option *ngFor="let v of vendorDropdown" [value]="v.venderCode">
+              {{v.venderCode}}
+            </option>
+          </select>
+        </div>
+
+     
+        <div class="col-md-2 d-flex align-items-end">
+          <button class="btn btn-success w-100" type="button" (click)="onSearch()">
+            Search
+          </button>
+        </div>
+
+        
+        <div class="col-md-2 d-flex align-items-end">
+          <button class="btn btn-secondary w-100" type="button" (click)="onRefresh()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+
+    
+        <div class="col-md-3 d-flex align-items-end">
+          <button class="btn btn-primary w-100" type="button" (click)="openAssignPopup()">
+            Assign / Unassign Items
+          </button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+
+ <div class="card p-3">
+  <div class="table-responsive table-scroll">
+    <table class="table table-bordered table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Vendor Code</th>
+          <th>Lot Vendor</th>
+          <th>Description</th>
+          <th>Email</th>
+          <!-- <th>IsActive</th> -->
+          <th width="150">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let v of vendorList">
+          <td>{{v.venderCode}}</td>
+          <td>{{v.lotVender}}</td>
+          <td>{{v.codeDescription}}</td>
+          <td>{{v.email}}</td>
+          <!-- <td>
+          <label class="switch">
+    <input type="checkbox" [checked]="v.isActive" (change)="toggleActive(v)">
+    <span class="slider round"></span>
+  </label>
+          </td> -->
+          <td>
+            <button class="btn btn-warning btn-sm" (click)="editVendor(v)">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+            <button class="btn btn-danger btn-sm ms-2" (click)="deleteVendor(v.venderId)">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+            
+          </td>
+        </tr>
+
+        <!-- EMPTY STATE -->
+        <tr *ngIf="vendorList.length === 0">
+          <td colspan="6" class="text-center text-muted">
+            No vendors found
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="d-flex justify-content-between align-items-center mt-3">
+
+      <!-- Page Size -->
+      <div>
+        <label>Page Size:</label>
+        <select (change)="onPageSizeChange($event)" class="form-control d-inline w-auto ms-2">
+          <option *ngFor="let size of pageSizeOptions" [value]="size">
+            {{size}}
+          </option>
+        </select>
+      </div>
+
+      <!-- Page Buttons -->
+      <div>
+        <button class="btn btn-secondary me-1" (click)="onPageChange(pageNumber - 1)" [disabled]="pageNumber === 1">
+          Previous
+        </button>
+
+        <button *ngFor="let page of getPages()" class="btn me-1"
+                [ngClass]="page === pageNumber ? 'btn-primary':'btn-outline-primary'"
+                (click)="onPageChange(page)">
+          {{page}}
+        </button>
+
+        <button class="btn btn-secondary" (click)="onPageChange(pageNumber + 1)" [disabled]="pageNumber === totalPages()">
+          Next
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ADD / UPDATE VENDOR MODAL -->
+<div class="modal fade" [class.show]="showForm" [style.display]="showForm ? 'block':'none'">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>{{isEditMode ? 'Update Vendor':'Add Vendor'}}</h5>
+        <button class="btn-close" (click)="cancelForm()"></button>
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="vendorForm">
+          <div class="row">
+            <div class="col-md-4">
+              <label>Vendor Code *</label>
+              <input class="form-control" formControlName="venderCode">
+            </div>
+            <div class="col-md-4">
+              <label>Description</label>
+              <input class="form-control" formControlName="codeDescription">
+            </div>
+            <div class="col-md-4">
+              <label>Email *</label>
+              <input class="form-control" formControlName="email">
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-success" (click)="saveVendor()">
+          {{isEditMode ? 'Update':'Save'}}
+        </button>
+        <button class="btn btn-danger" (click)="cancelForm()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show" *ngIf="showForm"></div>
+
+<!-- ASSIGN / UNASSIGN MODAL -->
+<div class="modal fade" [class.show]="showAssignPopup" [style.display]="showAssignPopup ? 'block':'none'">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Assign / Unassign Items</h5>
+        <button class="btn-close" (click)="closeAssignPopup()"></button>
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="assignForm">
+          <div class="row">
+            <div class="col-md-6">
+              <label>Vendor *</label>
+              <select class="form-control" formControlName="venderCode">
+                <option value="">Select Vendor</option>
+                <option *ngFor="let v of vendorDropdown" [value]="v.venderCode">
+                  {{v.venderCode}}
+                </option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label>Item *</label>
+              <select class="form-control" formControlName="itemCode">
+                <option value="">Select Item</option>
+                <option *ngFor="let i of itemList" [value]="i.itemCode">
+                  {{i.itemCode}}
+                </option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-success" (click)="assignItems()">Assign</button>
+        <button class="btn btn-danger" (click)="unAssignItems()">Unassign</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show" *ngIf="showAssignPopup"></div>
