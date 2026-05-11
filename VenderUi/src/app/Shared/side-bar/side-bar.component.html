@@ -20,7 +20,7 @@
     </li>
 
     <!-- Items -->
-    <li>
+   <li *ngIf="isAdmin">
       <a routerLink="/item" routerLinkActive="active">
         <i class="bi bi-grid"></i> Items
       </a>
@@ -97,7 +97,7 @@
 
 </li>
     <!-- Settings Menu -->
-    <li>
+  <li *ngIf="isAdmin">
 
       <a href="javascript:void(0)"
          (click)="toggleSettingMenu()"
