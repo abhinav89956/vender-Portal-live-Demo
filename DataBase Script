@@ -1,0 +1,2177 @@
+CREATE DATABASE [VP-Vender Test]
+GO
+
+USE [VP-Vender Test]
+GO
+/****** Object:  Schema [_vender]    Script Date: 12-05-2026 10:24:13 ******/
+CREATE SCHEMA [_vender]
+GO
+/****** Object:  Table [_vender].[BlockedUsers]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [_vender].[BlockedUsers](
+	[BlockId] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [int] NULL,
+	[BlockedUserId] [int] NULL,
+	[BlockedAt] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[BlockId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [_vender].[ChatMessage]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [_vender].[ChatMessage](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[SenderId] [int] NOT NULL,
+	[ReceiverId] [int] NOT NULL,
+	[LastMessage] [nvarchar](max) NULL,
+	[CreatedAt] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [_vender].[Contacts]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [_vender].[Contacts](
+	[ContactId] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [int] NULL,
+	[ContactUserId] [int] NULL,
+	[CreatedAt] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ContactId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [_vender].[Items]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [_vender].[Items](
+	[ItemId] [int] IDENTITY(1,1) NOT NULL,
+	[ItemCode] [nvarchar](100) NOT NULL,
+	[ItemDescription] [nvarchar](500) NULL,
+	[UPC] [bigint] NULL,
+	[CreatedDate] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ItemId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [_vender].[LotVender]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [_vender].[LotVender](
+	[LotId] [int] IDENTITY(1,1) NOT NULL,
+	[LotVenderCode] [nvarchar](50) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[LotId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [_vender].[Messages]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [_vender].[Messages](
+	[MessageId] [int] IDENTITY(1,1) NOT NULL,
+	[SenderId] [int] NULL,
+	[ReceiverId] [int] NULL,
+	[MessageText] [nvarchar](max) NULL,
+	[MessageType] [nvarchar](50) NULL,
+	[SentAt] [datetime] NULL,
+	[CreatedAt] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[MessageId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [_vender].[MessageStatus]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [_vender].[MessageStatus](
+	[StatusId] [int] IDENTITY(1,1) NOT NULL,
+	[MessageId] [int] NULL,
+	[ReceiverId] [int] NULL,
+	[IsDelivered] [bit] NULL,
+	[IsSeen] [bit] NULL,
+	[SeenAt] [datetime] NULL,
+	[IsSent] [bit] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[StatusId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [_vender].[Notifications]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [_vender].[Notifications](
+	[NotificationId] [int] IDENTITY(1,1) NOT NULL,
+	[MessageId] [int] NULL,
+	[IsRead] [bit] NULL,
+	[CreatedAt] [datetime] NULL,
+	[ReceiverId] [int] NULL,
+	[SenderId] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[NotificationId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [_vender].[PurchaseOrderDetails]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [_vender].[PurchaseOrderDetails](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[PurOrderId] [int] NULL,
+	[POHNUM] [varchar](50) NULL,
+	[ORDDAT] [date] NULL,
+	[ORDFEF] [date] NULL,
+	[CREDATTIM] [datetime] NULL,
+	[CUR_REF] [nvarchar](max) NULL,
+	[POHFCY] [varchar](20) NULL,
+	[POHFCY_REF] [nvarchar](max) NULL,
+	[BPSNUM] [varchar](50) NULL,
+	[BPSNUM_REF] [nvarchar](max) NULL,
+	[REVNUM] [int] NULL,
+	[TOTORD] [decimal](18, 2) NULL,
+	[RCPFLG_ID] [int] NULL,
+	[CLEFLG] [int] NULL,
+	[TTVORD] [decimal](18, 2) NULL,
+	[UPDDATTIM] [datetime] NULL,
+	[InsertDate] [datetime] NULL,
+	[UpdateDate] [datetime] NULL,
+	[IsActive] [bit] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [_vender].[Settings]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [_vender].[Settings](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[MinExpiryMonths] [int] NOT NULL,
+	[MaxExpiryMonths] [int] NOT NULL,
+	[ManufacturingDays] [int] NOT NULL,
+	[ExpiryTokenHrs] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [_vender].[User]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [_vender].[User](
+	[UserId] [int] IDENTITY(1,1) NOT NULL,
+	[Email] [nvarchar](150) NOT NULL,
+	[PaswdHash] [nvarchar](500) NOT NULL,
+	[UserCode] [nvarchar](50) NULL,
+	[CreatedAt] [datetime2](7) NOT NULL,
+	[UpdatedAt] [datetime2](7) NULL,
+	[IsActive] [bit] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[LastSeen] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[Email] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [_vender].[UserStatus]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [_vender].[UserStatus](
+	[StatusId] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [int] NULL,
+	[Status] [nvarchar](20) NULL,
+	[LastSeen] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[StatusId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [_vender].[Vender]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [_vender].[Vender](
+	[VenderId] [int] IDENTITY(1,1) NOT NULL,
+	[VenderCode] [nvarchar](50) NOT NULL,
+	[CodeDescription] [nvarchar](250) NULL,
+	[LotVender] [nvarchar](100) NULL,
+	[InsertedDate] [datetime2](7) NOT NULL,
+	[UpdatedDate] [datetime2](7) NULL,
+	[IsActive] [bit] NOT NULL,
+	[IsVerifird] [bit] NOT NULL,
+	[IsAgrementSigned] [bit] NOT NULL,
+	[IsSignupCompleted] [bit] NOT NULL,
+	[Email] [nvarchar](150) NULL,
+	[UserId] [int] NULL,
+	[IsDeleted] [bit] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[VenderId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [_vender].[VenderItemBarcode]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [_vender].[VenderItemBarcode](
+	[BarcodeId] [int] IDENTITY(1,1) NOT NULL,
+	[VenderCode] [varchar](50) NOT NULL,
+	[ItemCode] [varchar](50) NOT NULL,
+	[ManufacturingDate] [date] NOT NULL,
+	[ExpiryDate] [date] NOT NULL,
+	[VarCode] [varchar](100) NOT NULL,
+	[InsertedDate] [datetime] NULL,
+	[BarcodeBase64] [nvarchar](max) NULL,
+	[PdfBase64] [nvarchar](max) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[BarcodeId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[VarCode] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [_vender].[VenderItems]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [_vender].[VenderItems](
+	[VenderItemId] [int] IDENTITY(1,1) NOT NULL,
+	[VenderId] [int] NOT NULL,
+	[ItemId] [int] NOT NULL,
+	[AssignedDate] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[VenderItemId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [_vender].[VenderOtp]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [_vender].[VenderOtp](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[VenderId] [int] NULL,
+	[OtpCode] [nvarchar](10) NULL,
+	[ExpiryTime] [datetime] NULL,
+	[IsUsed] [bit] NULL,
+	[CreatedOn] [datetime] NULL,
+	[Email] [nvarchar](255) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [_vender].[BlockedUsers] ADD  DEFAULT (getdate()) FOR [BlockedAt]
+GO
+ALTER TABLE [_vender].[ChatMessage] ADD  DEFAULT (getdate()) FOR [CreatedAt]
+GO
+ALTER TABLE [_vender].[Contacts] ADD  DEFAULT (getdate()) FOR [CreatedAt]
+GO
+ALTER TABLE [_vender].[Items] ADD  DEFAULT (getdate()) FOR [CreatedDate]
+GO
+ALTER TABLE [_vender].[Messages] ADD  DEFAULT (getdate()) FOR [SentAt]
+GO
+ALTER TABLE [_vender].[Messages] ADD  DEFAULT (getdate()) FOR [CreatedAt]
+GO
+ALTER TABLE [_vender].[MessageStatus] ADD  DEFAULT ((0)) FOR [IsDelivered]
+GO
+ALTER TABLE [_vender].[MessageStatus] ADD  DEFAULT ((0)) FOR [IsSeen]
+GO
+ALTER TABLE [_vender].[MessageStatus] ADD  DEFAULT ((0)) FOR [IsSent]
+GO
+ALTER TABLE [_vender].[Notifications] ADD  DEFAULT ((0)) FOR [IsRead]
+GO
+ALTER TABLE [_vender].[Notifications] ADD  DEFAULT (getdate()) FOR [CreatedAt]
+GO
+ALTER TABLE [_vender].[User] ADD  DEFAULT (getdate()) FOR [CreatedAt]
+GO
+ALTER TABLE [_vender].[User] ADD  DEFAULT ((1)) FOR [IsActive]
+GO
+ALTER TABLE [_vender].[User] ADD  DEFAULT ((0)) FOR [IsDeleted]
+GO
+ALTER TABLE [_vender].[Vender] ADD  DEFAULT (getdate()) FOR [InsertedDate]
+GO
+ALTER TABLE [_vender].[Vender] ADD  DEFAULT ((1)) FOR [IsActive]
+GO
+ALTER TABLE [_vender].[Vender] ADD  DEFAULT ((0)) FOR [IsVerifird]
+GO
+ALTER TABLE [_vender].[Vender] ADD  DEFAULT ((0)) FOR [IsAgrementSigned]
+GO
+ALTER TABLE [_vender].[Vender] ADD  DEFAULT ((0)) FOR [IsSignupCompleted]
+GO
+ALTER TABLE [_vender].[Vender] ADD  DEFAULT ((0)) FOR [IsDeleted]
+GO
+ALTER TABLE [_vender].[VenderItemBarcode] ADD  DEFAULT (getdate()) FOR [InsertedDate]
+GO
+ALTER TABLE [_vender].[VenderItems] ADD  DEFAULT (getdate()) FOR [AssignedDate]
+GO
+ALTER TABLE [_vender].[VenderOtp] ADD  DEFAULT ((0)) FOR [IsUsed]
+GO
+ALTER TABLE [_vender].[VenderOtp] ADD  DEFAULT (getdate()) FOR [CreatedOn]
+GO
+ALTER TABLE [_vender].[BlockedUsers]  WITH CHECK ADD FOREIGN KEY([BlockedUserId])
+REFERENCES [_vender].[User] ([UserId])
+GO
+ALTER TABLE [_vender].[BlockedUsers]  WITH CHECK ADD FOREIGN KEY([UserId])
+REFERENCES [_vender].[User] ([UserId])
+GO
+ALTER TABLE [_vender].[Contacts]  WITH CHECK ADD FOREIGN KEY([ContactUserId])
+REFERENCES [_vender].[User] ([UserId])
+GO
+ALTER TABLE [_vender].[Contacts]  WITH CHECK ADD FOREIGN KEY([UserId])
+REFERENCES [_vender].[User] ([UserId])
+GO
+ALTER TABLE [_vender].[Messages]  WITH CHECK ADD FOREIGN KEY([ReceiverId])
+REFERENCES [_vender].[User] ([UserId])
+GO
+ALTER TABLE [_vender].[Messages]  WITH CHECK ADD FOREIGN KEY([SenderId])
+REFERENCES [_vender].[User] ([UserId])
+GO
+ALTER TABLE [_vender].[MessageStatus]  WITH CHECK ADD FOREIGN KEY([MessageId])
+REFERENCES [_vender].[Messages] ([MessageId])
+GO
+ALTER TABLE [_vender].[UserStatus]  WITH CHECK ADD FOREIGN KEY([UserId])
+REFERENCES [_vender].[User] ([UserId])
+GO
+ALTER TABLE [_vender].[Vender]  WITH CHECK ADD  CONSTRAINT [FK_Vender_User] FOREIGN KEY([UserId])
+REFERENCES [_vender].[User] ([UserId])
+GO
+ALTER TABLE [_vender].[Vender] CHECK CONSTRAINT [FK_Vender_User]
+GO
+ALTER TABLE [_vender].[VenderItems]  WITH CHECK ADD  CONSTRAINT [FK_VenderItems_Item] FOREIGN KEY([ItemId])
+REFERENCES [_vender].[Items] ([ItemId])
+GO
+ALTER TABLE [_vender].[VenderItems] CHECK CONSTRAINT [FK_VenderItems_Item]
+GO
+ALTER TABLE [_vender].[VenderItems]  WITH CHECK ADD  CONSTRAINT [FK_VenderItems_Vender] FOREIGN KEY([VenderId])
+REFERENCES [_vender].[Vender] ([VenderId])
+GO
+ALTER TABLE [_vender].[VenderItems] CHECK CONSTRAINT [FK_VenderItems_Vender]
+GO
+/****** Object:  StoredProcedure [_vender].[SP_AddVenderWithLotStrict]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [_vender].[SP_AddVenderWithLotStrict] @VenderCode NVARCHAR(50), @CodeDescription NVARCHAR(255), @Email NVARCHAR(255) AS BEGIN SET NOCOUNT ON; BEGIN TRY BEGIN TRANSACTION; DECLARE @ExistingVenderId INT; /* ✅ Duplicate VendorCode Check */ SELECT @ExistingVenderId = VenderId FROM [_vender].[Vender] WHERE VenderCode = @VenderCode AND IsDeleted = 0; IF @ExistingVenderId IS NOT NULL BEGIN ROLLBACK TRANSACTION; SELECT 0 AS Status, 'VenderCode already exists.' AS Message, @ExistingVenderId AS VenderId, NULL AS AssignedLotVender; RETURN; END /* ✅ Duplicate Email Check */ SELECT @ExistingVenderId = VenderId FROM [_vender].[Vender] WHERE Email = @Email AND IsDeleted = 0; IF @ExistingVenderId IS NOT NULL BEGIN ROLLBACK TRANSACTION; SELECT 0 AS Status, 'Email already exists.' AS Message, @ExistingVenderId AS VenderId, NULL AS AssignedLotVender; RETURN; END /* ✅ Concurrency Safe Lot Allocation */ DECLARE @LotVender NVARCHAR(50); SELECT TOP 1 @LotVender = LV.LotVenderCode FROM [_vender].[LotVender] LV WITH (UPDLOCK, HOLDLOCK) WHERE NOT EXISTS ( SELECT 1 FROM [_vender].[Vender] V WHERE V.LotVender = LV.LotVenderCode AND V.IsDeleted = 0 ) ORDER BY LV.LotId; IF @LotVender IS NULL BEGIN ROLLBACK TRANSACTION; SELECT 0 AS Status, 'No available LotVender. Please add more lots.' AS Message, NULL AS VenderId, NULL AS AssignedLotVender; RETURN; END /* ✅ Insert Vendor */ INSERT INTO [_vender].[Vender] ( VenderCode, CodeDescription, LotVender, InsertedDate, UpdatedDate, IsActive, IsVerifird, IsAgrementSigned, IsSignupCompleted, Email, IsDeleted ) VALUES ( @VenderCode, @CodeDescription, @LotVender, GETDATE(), NULL, 1, 0, 0, 0, @Email, 0 ); DECLARE @NewVenderId INT = SCOPE_IDENTITY(); COMMIT TRANSACTION; SELECT 1 AS Status, 'Vender added successfully.' AS Message, @NewVenderId AS VenderId, @LotVender AS AssignedLotVender; END TRY BEGIN CATCH IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION; SELECT 0 AS Status, ERROR_MESSAGE() AS Message, NULL AS VenderId, NULL AS AssignedLotVender; END CATCH END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_Barcode_Delete]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [_vender].[SP_Barcode_Delete]
+    @BarcodeId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF NOT EXISTS (SELECT 1 FROM[_vender].[VenderItemBarcode] WHERE BarcodeId = @BarcodeId)
+    BEGIN
+        SELECT 0 AS Status, 'BarCode not found.' AS Message;
+        RETURN;
+    END
+    DELETE FROM[_vender].[VenderItemBarcode]
+    WHERE BarcodeId = @BarcodeId;
+
+    SELECT 1 AS Status, 'BarCode deleted successfully.' AS Message;
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_BlockUser]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [_vender].[SP_BlockUser]
+(
+    @UserId INT,
+    @BlockedUserId INT
+)
+AS
+BEGIN
+
+BEGIN TRY
+
+    IF EXISTS
+    (
+        SELECT 1 
+        FROM [_vender].[BlockedUsers]
+        WHERE UserId = @UserId
+        AND BlockedUserId = @BlockedUserId
+    )
+
+    BEGIN
+
+        DELETE FROM [_vender].[BlockedUsers]
+        WHERE UserId = @UserId
+        AND BlockedUserId = @BlockedUserId
+
+        SELECT 
+        'User Unblocked Successfully' AS Message,
+        CAST(0 AS BIT) AS IsBlocked
+
+    END
+    ELSE
+    BEGIN
+
+        INSERT INTO [_vender].[BlockedUsers]
+        (
+            UserId,
+            BlockedUserId
+        )
+        VALUES
+        (
+            @UserId,
+            @BlockedUserId
+        )
+
+        SELECT 
+        'User Blocked Successfully' AS Message,
+        CAST(1 AS BIT) AS IsBlocked
+
+    END
+
+END TRY
+
+BEGIN CATCH
+
+    SELECT 
+    ERROR_MESSAGE() AS Message,
+    CAST(0 AS BIT) AS IsBlocked
+
+END CATCH
+
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_DeleteVender]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [_vender].[SP_DeleteVender]
+    @VenderId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        
+        IF NOT EXISTS (
+            SELECT 1 
+            FROM [_vender].[Vender]
+            WHERE VenderId = @VenderId
+              AND IsDeleted = 0
+        )
+        BEGIN
+            ROLLBACK TRANSACTION;
+
+            SELECT
+                0 AS Status,                
+                'Vender not found or already deleted.' AS Message,
+                NULL AS VenderId;
+
+            RETURN;
+        END
+
+        
+        UPDATE [_vender].[Vender]
+        SET 
+            IsDeleted = 1,
+            UpdatedDate = GETDATE()
+        WHERE VenderId = @VenderId;
+
+        COMMIT TRANSACTION;
+
+        --
+        SELECT
+            1 AS Status,                    
+            'Vender deleted successfully.' AS Message,
+            @VenderId AS VenderId;
+
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+
+        SELECT
+            0 AS Status,                     
+            ERROR_MESSAGE() AS Message,
+            NULL AS VenderId;
+    END CATCH
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_GetAllItems]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [_vender].[SP_GetAllItems]
+    @SearchItemCode NVARCHAR(100) = NULL,  
+    @PageNumber INT = 1,                   
+    @PageSize INT = 10                      
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        -- Validate page number and page size
+        IF @PageNumber < 1 SET @PageNumber = 1;
+        IF @PageSize < 1 SET @PageSize = 10;
+
+        -- Calculate offset for pagination
+        DECLARE @Offset INT = (@PageNumber - 1) * @PageSize;
+
+        -- Get total count of matching items
+        DECLARE @TotalCount INT;
+        SELECT @TotalCount = COUNT(*) 
+        FROM [_vender].[Items]
+        WHERE (@SearchItemCode IS NULL OR ItemCode LIKE '%' + @SearchItemCode + '%');
+
+        
+        SELECT
+            1 AS Status,
+            'Success' AS Message,
+            ItemID,
+            ItemCode,
+            ItemDescription,
+            UPC,
+            CreatedDate,
+            @TotalCount AS TotalCount  
+        FROM [_vender].[Items]
+        WHERE (@SearchItemCode IS NULL OR ItemCode LIKE '%' + @SearchItemCode + '%')
+        ORDER BY CreatedDate DESC
+        OFFSET @Offset ROWS
+        FETCH NEXT @PageSize ROWS ONLY;
+
+    END TRY
+    BEGIN CATCH
+        
+        DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE();
+
+        
+        SELECT
+            0 AS Status,
+            'Error: ' + @ErrorMessage AS Message,
+            NULL AS ItemID,
+            NULL AS ItemCode,
+            NULL AS ItemDescription,
+            NULL AS UPC,
+            NULL AS CreatedDate,
+            0 AS TotalCount;
+    END CATCH
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_GetAllVenders]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [_vender].[SP_GetAllVenders]
+    @SearchVenderCode NVARCHAR(100) = NULL,
+    @PageNumber INT = 1,
+    @PageSize INT = 10
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        -- Ensure valid paging
+        IF @PageNumber < 1 SET @PageNumber = 1;
+        IF @PageSize < 1 SET @PageSize = 10;
+
+        DECLARE @Offset INT = (@PageNumber - 1) * @PageSize;
+        DECLARE @TotalCount INT;
+
+        -- Get total count
+        SELECT @TotalCount = COUNT(*)
+        FROM [_vender].[Vender]
+        WHERE IsDeleted = 0
+          AND (@SearchVenderCode IS NULL OR VenderCode LIKE '%' + @SearchVenderCode + '%');
+
+        
+        SELECT
+            1 AS Status,
+            'Success' AS Message,
+            VenderId,
+            VenderCode,
+            CodeDescription,
+            LotVender,
+            Email,
+            InsertedDate,
+            UpdatedDate,
+            IsActive,
+            IsVerifird,
+            IsAgrementSigned,
+            IsSignupCompleted,
+            @TotalCount AS TotalCount 
+        FROM [_vender].[Vender]
+        WHERE IsDeleted = 0
+          AND (@SearchVenderCode IS NULL OR VenderCode LIKE '%' + @SearchVenderCode + '%')
+        ORDER BY InsertedDate DESC
+        OFFSET @Offset ROWS
+        FETCH NEXT @PageSize ROWS ONLY;
+
+    END TRY
+    BEGIN CATCH
+       
+        DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE();
+
+        SELECT
+            0 AS Status,
+            'Error: ' + @ErrorMessage AS Message,
+            CAST(NULL AS INT) AS VenderId,
+            CAST(NULL AS NVARCHAR(100)) AS VenderCode,
+            CAST(NULL AS NVARCHAR(200)) AS CodeDescription,
+            CAST(NULL AS NVARCHAR(50)) AS LotVender,
+            CAST(NULL AS NVARCHAR(100)) AS Email,
+            CAST(NULL AS DATETIME) AS InsertedDate,
+            CAST(NULL AS DATETIME) AS UpdatedDate,
+            CAST(0 AS BIT) AS IsActive,
+            CAST(0 AS BIT) AS IsVerifird,
+            CAST(0 AS BIT) AS IsAgrementSigned,
+            CAST(0 AS BIT) AS IsSignupCompleted,
+            0 AS TotalCount;
+    END CATCH
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_GetBlockedUsers]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [_vender].[SP_GetBlockedUsers]
+(
+    @UserId INT
+)
+AS
+BEGIN
+BEGIN TRY
+
+    SELECT 
+        BU.BlockId,
+        BU.UserId,              -- alias hata diya
+        BU.BlockedUserId,
+        BU.BlockedAt,
+        
+        CASE 
+            WHEN BU.UserId = @UserId THEN 'You Blocked This User'
+            WHEN BU.BlockedUserId = @UserId THEN 'This User Blocked You'
+        END AS BlockType
+
+    FROM [_vender].[BlockedUsers] BU
+    WHERE BU.UserId = @UserId 
+       OR BU.BlockedUserId = @UserId
+
+END TRY
+BEGIN CATCH
+    SELECT ERROR_MESSAGE() AS ErrorMessage
+END CATCH
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_GetChatMessages]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [_vender].[SP_GetChatMessages]
+(
+    @User1 INT,  -- logged-in user
+    @User2 INT   -- other contact
+)
+AS
+BEGIN
+    SELECT 
+        M.MessageId,
+        M.SenderId,
+        M.ReceiverId,
+        M.MessageText,
+        M.MessageType,
+        M.SentAt,
+
+        -- 1 if message sent by logged-in user
+        CASE WHEN M.SenderId = @User1 THEN 1 ELSE 0 END AS IsSent,
+
+        -- MessageStatus fields
+        ISNULL(MS.StatusId, 0) AS StatusId,
+        ISNULL(MS.IsDelivered, 0) AS IsDelivered,
+        ISNULL(MS.IsSeen, 0) AS IsSeen,
+        MS.SeenAt
+
+    FROM [_vender].[Messages] M
+    LEFT JOIN [_vender].[MessageStatus] MS
+        ON MS.MessageId = M.MessageId
+        AND MS.ReceiverId = CASE WHEN M.SenderId = @User1 THEN @User2 ELSE @User1 END
+
+    WHERE
+        (M.SenderId = @User1 AND M.ReceiverId = @User2)
+        OR
+        (M.SenderId = @User2 AND M.ReceiverId = @User1)
+
+    ORDER BY M.SentAt;
+END;
+GO
+/****** Object:  StoredProcedure [_vender].[SP_GetContacts]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [_vender].[SP_GetContacts]
+(
+    @UserId INT
+)
+AS
+BEGIN
+BEGIN TRY
+
+SELECT 
+    U.UserId,
+    0 AS ContactUserId,
+    ISNULL(V.VenderCode, U.UserCode) AS VenderCode,
+    U.Email,
+    U.UserCode,
+    U.LastSeen,
+    NULL AS Status,
+    GETDATE() AS CreatedAt,
+
+    -- Latest Message
+    M.MessageText,
+    M.MessageType,
+    M.SentAt
+
+FROM [_vender].[User] U
+
+LEFT JOIN [_vender].[Vender] V
+    ON U.UserId = V.UserId
+    AND V.IsDeleted = 0
+
+-- Latest message between users
+OUTER APPLY
+(
+    SELECT TOP 1 
+        MessageText,
+        MessageType,
+        SentAt
+    FROM [_vender].[Messages] MSG
+    WHERE 
+        (MSG.SenderId = @UserId AND MSG.ReceiverId = U.UserId)
+        OR
+        (MSG.SenderId = U.UserId AND MSG.ReceiverId = @UserId)
+    ORDER BY MSG.SentAt DESC
+) M
+
+WHERE 
+    U.UserId <> @UserId
+    AND U.IsDeleted = 0
+
+END TRY
+
+BEGIN CATCH
+    SELECT ERROR_MESSAGE() AS ErrorMessage
+END CATCH
+
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_GetItemsByVenderCode]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [_vender].[SP_GetItemsByVenderCode]
+    @VenderCode VARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+
+       
+        IF NOT EXISTS (
+            SELECT 1 
+            FROM [_vender].[Vender]
+            WHERE VenderCode = @VenderCode
+              AND IsActive = 1
+              AND IsDeleted = 0
+        )
+        BEGIN
+            SELECT 
+                0 AS Status,
+                'Vendor not found, inactive, or deleted.' AS Message;
+            RETURN;
+        END
+
+       
+        SELECT 
+            1 AS Status,
+            'Items fetched successfully.' AS Message,
+            V.VenderId,          
+            V.VenderCode,
+            I.ItemId,
+            I.ItemCode
+        FROM [_vender].[Vender] V
+        INNER JOIN [_vender].[VenderItems] VI 
+            ON V.VenderId = VI.VenderId
+        INNER JOIN [_vender].[Items] I
+            ON VI.ItemId = I.ItemId
+        WHERE V.VenderCode = @VenderCode
+          AND V.IsActive = 1     
+          AND V.IsDeleted = 0;    
+
+    END TRY
+    BEGIN CATCH
+        SELECT 
+            0 AS Status,
+            ERROR_MESSAGE() AS Message;
+    END CATCH
+END;
+GO
+/****** Object:  StoredProcedure [_vender].[SP_GetNotifications]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [_vender].[SP_GetNotifications]
+(
+    @UserId INT
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        SELECT 
+            N.NotificationId,
+            N.MessageId,
+            N.IsRead,
+            N.CreatedAt,
+            N.ReceiverId,
+            N.SenderId,
+            M.MessageText,
+            M.MessageType,
+            M.SentAt
+        FROM [_vender].[Notifications] N
+        INNER JOIN [_vender].[Messages] M 
+            ON N.MessageId = M.MessageId
+        WHERE N.ReceiverId = @UserId   -- ✅ Corrected column
+        AND N.IsRead = 0
+        ORDER BY N.CreatedAt DESC;
+
+    END TRY
+    BEGIN CATCH
+        SELECT ERROR_MESSAGE() AS ErrorMessage;
+    END CATCH
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_GetVenderByUserId]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [_vender].[SP_GetVenderByUserId]
+    @UserId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF EXISTS (
+        SELECT 1 
+        FROM [_vender].[Vender]
+        WHERE UserId = @UserId 
+          AND IsDeleted = 0
+    )
+    BEGIN
+        SELECT 
+            1 AS Status,
+            'Vendor fetched successfully' AS Message,
+            VenderCode,
+            Email,
+            LotVender,
+            CodeDescription,
+            InsertedDate
+        FROM [_vender].[Vender]
+        WHERE UserId = @UserId
+          AND IsDeleted = 0;
+    END
+    ELSE
+    BEGIN
+        SELECT 
+            0 AS Status,
+            'Vendor not found' AS Message,
+            NULL AS VenderCode,
+            NULL AS Email,
+            NULL AS LotVender,
+            NULL AS CodeDescription,
+            NULL AS InsertedDate;
+    END
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_GetVenderItemBarcodes]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ Create PROCEDURE [_vender].[SP_GetVenderItemBarcodes] AS BEGIN SET NOCOUNT ON; BEGIN TRY IF EXISTS (SELECT 1 FROM [_vender].[VenderItemBarcode]) BEGIN SELECT 1 AS [Status], 'Barcodes fetched successfully' AS [Message], [BarcodeId], [VenderCode], [ItemCode], [ManufacturingDate], [ExpiryDate], [VarCode], [InsertedDate], [BarcodeBase64], [PdfBase64] FROM [_vender].[VenderItemBarcode] ORDER BY InsertedDate DESC; END ELSE BEGIN SELECT 0 AS [Status], 'No barcode records found' AS [Message]; END END TRY BEGIN CATCH SELECT 0 AS [Status], ERROR_MESSAGE() AS [Message]; END CATCH END
+GO
+/****** Object:  StoredProcedure [_vender].[sp_InsertVenderItemBarcode]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [_vender].[sp_InsertVenderItemBarcode]
+    @VenderCode VARCHAR(50),
+    @ItemCode VARCHAR(50),
+    @VarCode VARCHAR(100),         -- ✅ Now VarCode is passed from C#
+    @ManufacturingDate DATE,
+    @ExpiryDate DATE,
+    @BarcodeBase64 VARCHAR(MAX),
+    @PdfBase64 VARCHAR(MAX)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        DECLARE @BarcodeId INT;
+
+       
+        INSERT INTO [_vender].[VenderItemBarcode]
+            (VenderCode, ItemCode, ManufacturingDate, ExpiryDate, VarCode, InsertedDate, BarcodeBase64, PdfBase64)
+        VALUES
+            (@VenderCode, @ItemCode, @ManufacturingDate, @ExpiryDate, @VarCode, GETDATE(), @BarcodeBase64, @PdfBase64);
+
+        SET @BarcodeId = SCOPE_IDENTITY();
+
+        
+        SELECT 
+            1 AS Status,
+            @BarcodeId AS BarcodeId,
+            @VarCode AS VarCode;
+
+    END TRY
+    BEGIN CATCH
+        -- Return failure status
+        SELECT 
+            0 AS Status,
+            -1 AS BarcodeId,
+            NULL AS VarCode,
+            ERROR_MESSAGE() AS Message;
+    END CATCH
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_Items_Add]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [_vender].[SP_Items_Add]
+    @ItemCode NVARCHAR(100),
+    @ItemDescription NVARCHAR(500),
+    @UPC BIGINT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        
+        IF EXISTS (SELECT 1 FROM [_vender].[Items] WHERE ItemCode = @ItemCode)
+        BEGIN
+            SELECT 0 AS Status, 'Item Code already exists.' AS Message;
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
+
+        
+        CREATE TABLE #TempItems
+        (
+            ItemCode NVARCHAR(100),
+            ItemDescription NVARCHAR(500),
+            UPC BIGINT,
+            CreatedDate DATETIME
+        );
+
+       
+        INSERT INTO #TempItems
+        (
+            ItemCode,
+            ItemDescription,
+            UPC,
+            CreatedDate
+        )
+        VALUES
+        (
+            @ItemCode,
+            @ItemDescription,
+            @UPC,
+            GETDATE()
+        );
+
+       
+        INSERT INTO [_vender].[Items]
+        (
+            ItemCode,
+            ItemDescription,
+            UPC,
+            CreatedDate
+        )
+        SELECT
+            ItemCode,
+            ItemDescription,
+            UPC,
+            CreatedDate
+        FROM #TempItems;
+
+        COMMIT TRANSACTION;
+
+        SELECT 1 AS Status, 'Item added successfully.' AS Message;
+
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+
+        SELECT 
+            0 AS Status,
+            ERROR_MESSAGE() AS Message;
+    END CATCH
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_Items_Delete]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [_vender].[SP_Items_Delete]
+    @ItemId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF NOT EXISTS (SELECT 1 FROM [_vender].[Items] WHERE ItemId = @ItemId)
+    BEGIN
+        SELECT 0 AS Status, 'Item not found.' AS Message;
+        RETURN;
+    END
+
+    -- Delete from child table first
+    DELETE FROM [_vender].[VenderItems]
+    WHERE ItemId = @ItemId;
+
+    -- Then delete from parent table
+    DELETE FROM [_vender].[Items]
+    WHERE ItemId = @ItemId;
+
+    SELECT 1 AS Status, 'Item deleted successfully.' AS Message;
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_Items_Update]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [_vender].[SP_Items_Update]
+    @ItemId INT,
+    @ItemCode NVARCHAR(100),
+    @ItemDescription NVARCHAR(500),
+    @UPC BIGINT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    
+    IF NOT EXISTS (SELECT 1 FROM [_vender].[Items] WHERE ItemId = @ItemId)
+    BEGIN
+        SELECT 0 AS Status, 'Item not found.' AS Message;
+        RETURN;
+    END
+
+
+    IF EXISTS (
+        SELECT 1 
+        FROM [_vender].[Items] 
+        WHERE ItemCode = @ItemCode 
+          AND ItemId <> @ItemId
+    )
+    BEGIN
+        SELECT 0 AS Status, 'Item Code already exists.' AS Message;
+        RETURN;
+    END
+
+    UPDATE [_vender].[Items]
+    SET
+        ItemCode = @ItemCode,
+        ItemDescription = @ItemDescription,
+        UPC = @UPC
+    WHERE ItemId = @ItemId;
+
+    SELECT 1 AS Status, 'Item updated successfully.' AS Message;
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_MarkMessageAsSeen]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [_vender].[SP_MarkMessageAsSeen]
+(
+    @ReceiverId INT
+)
+AS
+BEGIN
+BEGIN TRY
+
+    -- Receiver ke saare unread notifications ko read kar do
+    UPDATE [_vender].[Notifications]
+    SET IsRead = 1
+    WHERE ReceiverId = @ReceiverId
+    AND IsRead = 0;
+
+    -- Updated records dikha do (optional)
+    SELECT *
+    FROM [_vender].[Notifications]
+    WHERE ReceiverId = @ReceiverId;
+
+END TRY
+BEGIN CATCH
+    SELECT ERROR_MESSAGE() AS ErrorMessage;
+END CATCH
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_MarkMessageDelivered]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- SP: MarkMessageDelivered
+Create PROCEDURE [_vender].[SP_MarkMessageDelivered]
+(
+    @MessageId INT,
+    @ReceiverId INT
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        UPDATE [_vender].[MessageStatus]
+        SET IsDelivered = 1
+        WHERE MessageId = @MessageId AND ReceiverId = @ReceiverId;
+    END TRY
+    BEGIN CATCH
+        DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE();
+        DECLARE @ErrorSeverity INT = ERROR_SEVERITY();
+        DECLARE @ErrorState INT = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_RegisterUser]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [_vender].[SP_RegisterUser]
+    @Email NVARCHAR(255),
+    @Password NVARCHAR(500),
+    @VenderCode NVARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @UserId INT;
+    DECLARE @IsActive BIT;
+    DECLARE @VendorActive BIT;
+
+    -- Token related
+    DECLARE @Token NVARCHAR(MAX);
+    DECLARE @ExpiryHours INT;
+    DECLARE @ExpiryDate DATETIME;
+
+    ------------------------------
+    -- 1. Check Vendor exists & active
+    ------------------------------
+    SELECT @VendorActive = IsActive
+    FROM [_vender].[Vender]
+    WHERE Email = @Email
+      AND VenderCode = @VenderCode
+      AND IsDeleted = 0;
+
+    IF @VendorActive IS NULL
+    BEGIN
+        SELECT 
+            0 AS Status,
+            NULL AS UserId,
+            @Email AS Email,
+            NULL AS Token,
+            NULL AS ExpiryDate,
+            NULL AS PendingExpiry,
+            'Invalid Email or Vendor Code' AS Message;
+        RETURN;
+    END
+
+    IF @VendorActive = 0
+    BEGIN
+        SELECT 
+            0 AS Status,
+            NULL AS UserId,
+            @Email AS Email,
+            NULL AS Token,
+            NULL AS ExpiryDate,
+            NULL AS PendingExpiry,
+            'Vendor is inactive. Contact admin.' AS Message;
+        RETURN;
+    END
+
+    ------------------------------
+    -- 2. Check if user exists
+    ------------------------------
+    SELECT 
+        @UserId = UserId,
+        @IsActive = IsActive
+    FROM [_vender].[User]
+    WHERE Email = @Email
+      AND IsDeleted = 0;
+
+    IF @UserId IS NOT NULL AND @IsActive = 0
+    BEGIN
+        SELECT 
+            0 AS Status,
+            @UserId AS UserId,
+            @Email AS Email,
+            NULL AS Token,
+            NULL AS ExpiryDate,
+            NULL AS PendingExpiry,
+            'User exists but is inactive. Contact admin.' AS Message;
+        RETURN;
+    END
+
+    IF @UserId IS NOT NULL
+    BEGIN
+        SELECT 
+            0 AS Status,
+            @UserId AS UserId,
+            @Email AS Email,
+            NULL AS Token,
+            NULL AS ExpiryDate,
+            NULL AS PendingExpiry,
+            'User already exists' AS Message;
+        RETURN;
+    END
+
+    ------------------------------
+    -- 3. Insert User
+    ------------------------------
+    INSERT INTO [_vender].[User] 
+        (Email, PaswdHash, UserCode, CreatedAt, UpdatedAt, IsActive, IsDeleted)
+    VALUES 
+        (
+            @Email,
+            CONVERT(NVARCHAR(500), HASHBYTES('SHA2_256', @Password), 2),
+            NULL,
+            GETDATE(),
+            GETDATE(),
+            1,
+            0
+        );
+
+    SET @UserId = SCOPE_IDENTITY();
+
+    ------------------------------
+    -- 4. Update Vendor with UserId
+    ------------------------------
+    UPDATE [_vender].[Vender]
+    SET UserId = @UserId
+    WHERE Email = @Email
+      AND VenderCode = @VenderCode
+      AND IsDeleted = 0;
+
+    ------------------------------
+    -- 5. Get Token Expiry Hours from Settings
+    ------------------------------
+SELECT @ExpiryHours = ExpiryTokenHrs
+FROM [_vender].[Settings];
+
+IF @ExpiryHours IS NULL
+    SET @ExpiryHours = 48; 
+
+    ------------------------------
+    -- 6. Generate Token & Expiry Date
+    ------------------------------
+    SET @Token = NEWID(); -- simple token, replace with real JWT if needed
+    SET @ExpiryDate = DATEADD(HOUR, @ExpiryHours, GETDATE());
+
+    ------------------------------
+    -- 7. Insert into UserToken table
+    ------------------------------
+    INSERT INTO [_vender].[UserToken]
+    (
+        UserId,
+        UserCode,
+        Email,
+        Token,
+        ExpiryDate,
+        IsExpiry,
+        CreatedDate
+        -- PendingExpiry left NULL intentionally
+    )
+    VALUES
+    (
+        @UserId,
+        @VenderCode,
+        @Email,
+        @Token,
+        @ExpiryDate,
+        0,
+        GETDATE()
+    );
+
+    ------------------------------
+    -- 8. Return Response
+    ------------------------------
+    SELECT 
+        1 AS Status,
+        @UserId AS UserId,
+        @Email AS Email,
+        @Token AS Token,
+        @ExpiryDate AS ExpiryDate,
+        NULL AS PendingExpiry,
+        'Registration successful' AS Message;
+
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_ResetPassword]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [_vender].[SP_ResetPassword]
+(
+    @Email NVARCHAR(255),
+    @Password NVARCHAR(500)
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @UserId INT;
+
+    SELECT @UserId = UserId
+    FROM [_vender].[User]
+    WHERE Email = @Email
+      AND IsDeleted = 0;
+
+    IF @UserId IS NULL
+    BEGIN
+        SELECT 0 AS Status, 'User Not Found' AS Message;
+        RETURN;
+    END
+
+    UPDATE [_vender].[User]
+    SET PaswdHash = CONVERT(NVARCHAR(500), HASHBYTES('SHA2_256', @Password), 2),
+        UpdatedAt = GETDATE()
+    WHERE UserId = @UserId;
+
+    SELECT 1 AS Status, 'Password Reset Successfully' AS Message;
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_SendMessage]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [_vender].[SP_SendMessage]
+(
+    @SenderId INT,
+    @ReceiverId INT,
+    @MessageText NVARCHAR(MAX),
+    @MessageType NVARCHAR(50)
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        DECLARE @MessageId INT;
+
+        -- 1️⃣ Insert into Messages table
+        INSERT INTO [_vender].[Messages] 
+            (SenderId, ReceiverId, MessageText, MessageType, SentAt, CreatedAt)
+        VALUES 
+            (@SenderId, @ReceiverId, @MessageText, @MessageType, GETDATE(), GETDATE());
+
+        SET @MessageId = SCOPE_IDENTITY();
+
+        -- 2️⃣ Insert into MessageStatus
+        INSERT INTO [_vender].[MessageStatus] 
+            (MessageId, ReceiverId, IsSent, IsDelivered, IsSeen, SeenAt)
+        VALUES 
+            (@MessageId, @ReceiverId, 1, 0, 0, NULL);
+
+        -- 3️⃣ Insert into Notifications (ReceiverId added)
+  INSERT INTO [_vender].[Notifications] 
+            (MessageId, ReceiverId, SenderId, IsRead, CreatedAt)
+        VALUES 
+            (@MessageId, @ReceiverId, @SenderId, 0, GETDATE());
+
+
+        -- 4️⃣ Return inserted message with status
+        SELECT 
+            M.MessageId AS MessageId,
+            M.SenderId AS SenderId,
+            M.ReceiverId AS ReceiverId,
+            M.MessageText AS MessageText,
+            M.MessageType AS MessageType,
+            M.SentAt AS SentAt,
+            MS.IsSent AS IsSent,
+            MS.IsDelivered AS IsDelivered,
+            MS.IsSeen AS IsSeen
+        FROM [_vender].[Messages] M
+        INNER JOIN [_vender].[MessageStatus] MS
+            ON M.MessageId = MS.MessageId
+        WHERE M.MessageId = @MessageId;
+
+    END TRY
+    BEGIN CATCH
+        SELECT 
+            ERROR_NUMBER() AS ErrorNumber,
+            ERROR_MESSAGE() AS ErrorMessage;
+    END CATCH
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_SendOtp]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [_vender].[SP_SendOtp]
+(
+    @Email NVARCHAR(255),
+    @VenderCode NVARCHAR(50)
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @VenderId INT;
+    DECLARE @Otp NVARCHAR(6);
+
+    
+
+    SELECT @VenderId = VenderId
+    FROM [_vender].[Vender]
+    WHERE Email = @Email
+      AND VenderCode = @VenderCode
+      AND IsDeleted = 0;
+
+    IF @VenderId IS NULL
+    BEGIN
+        SELECT 0 AS Status, 'Invalid Email or Vendor Code' AS Message;
+        RETURN;
+    END
+
+
+    SET @Otp = CAST(ABS(CHECKSUM(NEWID())) % 900000 + 100000 AS NVARCHAR);
+
+   
+    INSERT INTO [_vender].[VenderOtp]
+    (
+        VenderId,
+        Email,
+        OtpCode,
+        ExpiryTime
+    )
+    VALUES
+    (
+        @VenderId,
+        @Email,
+        @Otp,
+        DATEADD(MINUTE, 5, GETDATE())
+    );
+
+    SELECT 1 AS Status, 'OTP Sent Successfully' AS Message, @Otp AS OtpCode;
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_Settings_Get]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [_vender].[SP_Settings_Get]
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+
+        SELECT TOP 1
+            Id,
+            MinExpiryMonths,
+            MaxExpiryMonths,
+            ManufacturingDays,
+			ExpiryTokenHrs
+        FROM [_vender].[Settings];
+
+    END TRY
+    BEGIN CATCH
+
+        SELECT 
+            0 AS Status,
+            ERROR_MESSAGE() AS Message;
+
+    END CATCH
+END;
+GO
+/****** Object:  StoredProcedure [_vender].[SP_Settings_Update]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [_vender].[SP_Settings_Update]
+    @Id INT,
+    @MinExpiryMonths INT,
+    @ManufacturingDays INT,
+    @ExpiryTokenHrs INT   -- Added Token Expiry Hours
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @Status INT;
+    DECLARE @Message NVARCHAR(200);
+
+    BEGIN TRY
+
+        UPDATE [_vender].[Settings]
+        SET
+            MinExpiryMonths = @MinExpiryMonths,
+            ManufacturingDays = @ManufacturingDays,
+            ExpiryTokenHrs = @ExpiryTokenHrs   -- Updated column
+        WHERE Id = @Id;
+
+        IF @@ROWCOUNT = 0
+        BEGIN
+            SET @Status = 0;
+            SET @Message = 'No rows updated.';
+        END
+        ELSE
+        BEGIN
+            SET @Status = 1;
+            SET @Message = 'Settings updated successfully.';
+        END
+
+        SELECT @Status AS Status, @Message AS Message;
+
+    END TRY
+    BEGIN CATCH
+        SET @Status = 0;
+        SET @Message = ERROR_MESSAGE();
+
+        SELECT @Status AS Status, @Message AS Message;
+    END CATCH
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_ToggleBlockUser]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE   PROCEDURE [_vender].[SP_ToggleBlockUser]
+(
+    @UserId INT,
+    @TargetUserId INT,
+    @Action NVARCHAR(10)  -- 'Block' or 'Unblock'
+)
+AS
+BEGIN
+    BEGIN TRY
+        IF @Action = 'Block'
+        BEGIN
+            -- Insert only if not already blocked
+            IF NOT EXISTS (
+                SELECT 1 FROM [_vender].[BlockedUsers]
+                WHERE UserId = @UserId AND BlockedUserId = @TargetUserId
+            )
+            BEGIN
+                INSERT INTO [_vender].[BlockedUsers] (UserId, BlockedUserId)
+                VALUES (@UserId, @TargetUserId)
+            END
+
+            SELECT 'User Blocked Successfully' AS Message
+        END
+        ELSE IF @Action = 'Unblock'
+        BEGIN
+            DELETE FROM [_vender].[BlockedUsers]
+            WHERE UserId = @UserId AND BlockedUserId = @TargetUserId
+
+            SELECT 'User Unblocked Successfully' AS Message
+        END
+        ELSE
+        BEGIN
+            THROW 50000, 'Invalid Action. Use "Block" or "Unblock".', 1
+        END
+    END TRY
+    BEGIN CATCH
+        SELECT ERROR_MESSAGE() AS ErrorMessage
+    END CATCH
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_UpdateDeliveredStatus]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [_vender].[SP_UpdateDeliveredStatus]
+(
+    @ReceiverId INT
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE MS
+    SET 
+        MS.IsDelivered = 1
+    FROM [_vender].[MessageStatus] MS
+    WHERE 
+        MS.ReceiverId = @ReceiverId
+        AND MS.IsDelivered = 0;
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_UpdateMessageStatus]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+/****** Object:  StoredProcedure [_vender].[SP_UpdateMessageStatus] ******/
+CREATE PROCEDURE [_vender].[SP_UpdateMessageStatus]
+(
+    @MessageId INT,
+    @ReceiverId INT,
+    @IsSent BIT = NULL,
+    @IsDelivered BIT = NULL,
+    @IsSeen BIT = NULL,
+    @SeenAt DATETIME = NULL
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        UPDATE [_vender].[MessageStatus]
+        SET
+            IsSent = COALESCE(@IsSent, IsSent),
+            IsDelivered = COALESCE(@IsDelivered, IsDelivered),
+            IsSeen = COALESCE(@IsSeen, IsSeen),
+            SeenAt = COALESCE(@SeenAt, SeenAt)
+        WHERE MessageId = @MessageId
+          AND ReceiverId = @ReceiverId;
+
+        SELECT 'Message status updated successfully' AS Message;
+
+    END TRY
+    BEGIN CATCH
+        SELECT 
+            ERROR_NUMBER() AS ErrorNumber,
+            ERROR_MESSAGE() AS ErrorMessage;
+    END CATCH
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_UpdateSeenStatus]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [_vender].[SP_UpdateSeenStatus]
+(
+    @ReceiverId INT,
+    @MessageId INT
+)
+AS
+BEGIN
+BEGIN TRY
+
+    -- 1️⃣ Update MessageStatus
+    UPDATE [_vender].[MessageStatus]
+    SET 
+        IsDelivered = 1,
+        IsSeen = 1,
+        SeenAt = GETDATE()
+    WHERE 
+        ReceiverId = @ReceiverId
+        AND MessageId = @MessageId;
+
+    -- 2️⃣ Update Notifications (ReceiverId base)
+    UPDATE [_vender].[Notifications]
+    SET IsRead = 1
+    WHERE 
+        ReceiverId = @ReceiverId
+        AND IsRead = 0;
+
+    -- 3️⃣ Return updated message status
+    SELECT 
+        MessageId,
+        ReceiverId,
+        IsDelivered,
+        IsSeen,
+        SeenAt
+    FROM [_vender].[MessageStatus]
+    WHERE MessageId = @MessageId;
+
+END TRY
+BEGIN CATCH
+    SELECT 
+        ERROR_NUMBER() AS ErrorNumber,
+        ERROR_MESSAGE() AS ErrorMessage;
+END CATCH
+END
+GO
+/****** Object:  StoredProcedure [_vender].[sp_UpdateUserLastSeen]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [_vender].[sp_UpdateUserLastSeen]
+    @UserId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE [_vender].[User]
+    SET LastSeen = GETDATE()
+    WHERE UserId = @UserId
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_UpdateVender]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [_vender].[SP_UpdateVender]
+    @VenderId INT,
+    @VenderCode NVARCHAR(50),
+    @CodeDescription NVARCHAR(255),
+    @Email NVARCHAR(255),
+    @IsActive BIT = NULL 
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        DECLARE @ExistingVenderId INT;
+
+        
+        IF NOT EXISTS (
+            SELECT 1
+            FROM [_vender].[Vender]
+            WHERE VenderId = @VenderId
+        )
+        BEGIN
+            ROLLBACK TRANSACTION;
+            SELECT 0 AS Status, 'Vender not found.' AS Message, NULL AS VenderId;
+            RETURN;
+        END
+
+        SELECT TOP 1 @ExistingVenderId = VenderId
+        FROM [_vender].[Vender]
+        WHERE VenderCode = @VenderCode
+          AND VenderId <> @VenderId
+          AND IsDeleted = 0;
+
+        IF @ExistingVenderId IS NOT NULL
+        BEGIN
+            ROLLBACK TRANSACTION;
+            SELECT 0 AS Status, 'VenderCode already exists.' AS Message, @VenderId AS VenderId;
+            RETURN;
+        END
+
+       
+        SELECT TOP 1 @ExistingVenderId = VenderId
+        FROM [_vender].[Vender]
+        WHERE Email = @Email
+          AND VenderId <> @VenderId
+          AND IsDeleted = 0;
+
+        IF @ExistingVenderId IS NOT NULL
+        BEGIN
+            ROLLBACK TRANSACTION;
+            SELECT 0 AS Status, 'Email already exists.' AS Message, @VenderId AS VenderId;
+            RETURN;
+        END
+
+        
+        UPDATE [_vender].[Vender]
+        SET
+            VenderCode = @VenderCode,
+            CodeDescription = @CodeDescription,
+            Email = @Email,
+            IsActive = COALESCE(@IsActive, IsActive), -- keep old value if null
+            UpdatedDate = GETDATE()
+        WHERE VenderId = @VenderId;
+
+        COMMIT TRANSACTION;
+
+        SELECT 1 AS Status, 'Vender updated successfully.' AS Message, @VenderId AS VenderId;
+
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+
+        SELECT 0 AS Status, ERROR_MESSAGE() AS Message, NULL AS VenderId;
+    END CATCH
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_UserLogin]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [_vender].[SP_UserLogin]
+    @Email NVARCHAR(255),
+    @Password NVARCHAR(500)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        1 AS Status,
+        u.UserId,
+        u.Email,
+        u.IsActive,
+        v.VenderCode,
+        'Login successful' AS Message
+    FROM [_vender].[User] u
+    LEFT JOIN [_vender].[Vender] v 
+        ON v.Email = u.Email     -- ✅ FIXED JOIN
+    WHERE u.Email = @Email
+      AND u.PaswdHash = CONVERT(NVARCHAR(500), HASHBYTES('SHA2_256', @Password), 2)
+      AND u.IsDeleted = 0;
+
+    IF @@ROWCOUNT = 0
+    BEGIN
+        SELECT 
+            0 AS Status,
+            NULL AS UserId,
+            @Email AS Email,
+            NULL AS IsActive,
+            NULL AS VenderCode,
+            'Invalid email or password' AS Message;
+    END
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_VenderItems_AssignUnassign]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [_vender].[SP_VenderItems_AssignUnassign]
+    @VenderCode NVARCHAR(100),
+    @ItemCode NVARCHAR(100),
+    @Action NVARCHAR(20)   -- ASSIGN / UNASSIGN
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @VenderId INT;
+    DECLARE @ItemId INT;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- =========================
+        -- GET VENDOR ID
+        -- =========================
+        SELECT @VenderId = VenderId
+        FROM [_vender].[Vender]
+        WHERE VenderCode = @VenderCode
+          AND IsDeleted = 0;
+
+        IF (@VenderId IS NULL)
+        BEGIN
+            ROLLBACK TRANSACTION;
+            SELECT 0 AS Status, 'Invalid Vendor Code.' AS Message;
+            RETURN;
+        END
+
+        -- =========================
+        -- GET ITEM ID
+        -- =========================
+        SELECT @ItemId = ItemId
+        FROM [_vender].[Items]
+        WHERE ItemCode = @ItemCode;
+
+        IF (@ItemId IS NULL)
+        BEGIN
+            ROLLBACK TRANSACTION;
+            SELECT 0 AS Status, 'Invalid Item Code.' AS Message;
+            RETURN;
+        END
+
+        -- =========================
+        -- ASSIGN ITEM
+        -- =========================
+        IF (UPPER(@Action) = 'ASSIGN')
+        BEGIN
+            IF EXISTS (
+                SELECT 1 
+                FROM [_vender].[VenderItems]
+                WHERE VenderId = @VenderId
+                  AND ItemId = @ItemId
+            )
+            BEGIN
+                ROLLBACK TRANSACTION;
+                SELECT 0 AS Status, 'Item already assigned.' AS Message;
+                RETURN;
+            END
+
+            INSERT INTO [_vender].[VenderItems] (VenderId, ItemId, AssignedDate)
+            VALUES (@VenderId, @ItemId, GETDATE());
+
+            COMMIT TRANSACTION;
+            SELECT 1 AS Status, 'Item assigned successfully.' AS Message;
+            RETURN;
+        END
+
+        -- =========================
+        -- UNASSIGN ITEM
+        -- =========================
+        IF (UPPER(@Action) = 'UNASSIGN')
+        BEGIN
+            IF NOT EXISTS (
+                SELECT 1 
+                FROM [_vender].[VenderItems]
+                WHERE VenderId = @VenderId
+                  AND ItemId = @ItemId
+            )
+            BEGIN
+                ROLLBACK TRANSACTION;
+                SELECT 0 AS Status, 'Item not assigned.' AS Message;
+                RETURN;
+            END
+
+            DELETE FROM [_vender].[VenderItems]
+            WHERE VenderId = @VenderId
+              AND ItemId = @ItemId;
+
+            COMMIT TRANSACTION;
+            SELECT 1 AS Status, 'Item unassigned successfully.' AS Message;
+            RETURN;
+        END
+
+      
+        ROLLBACK TRANSACTION;
+        SELECT 0 AS Status, 'Invalid Action. Use ASSIGN / UNASSIGN.' AS Message;
+
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        SELECT 0 AS Status, ERROR_MESSAGE() AS Message;
+    END CATCH
+END
+GO
+/****** Object:  StoredProcedure [_vender].[SP_VerifyOtp]    Script Date: 12-05-2026 10:24:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [_vender].[SP_VerifyOtp]
+(
+    @Email NVARCHAR(255),
+    @Otp NVARCHAR(6)
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM [_vender].[VenderOtp]
+        WHERE Email = @Email
+          AND OtpCode = @Otp
+          AND IsUsed = 0
+          AND ExpiryTime > GETDATE()
+    )
+    BEGIN
+        SELECT 0 AS Status, 'Invalid or Expired OTP' AS Message;
+        RETURN;
+    END
+
+    UPDATE [_vender].[VenderOtp]
+    SET IsUsed = 1
+    WHERE Email = @Email
+      AND OtpCode = @Otp;
+
+    SELECT 1 AS Status, 'OTP Verified Successfully' AS Message;
+END
+GO
+USE [VP-Vender Test]
+GO
+
+SET IDENTITY_INSERT [_vender].[User] ON
+GO
+
+INSERT INTO [_vender].[User]
+(
+    UserId,
+    Email,
+    PaswdHash,
+    UserCode,
+    CreatedAt,
+    UpdatedAt,
+    IsActive,
+    IsDeleted,
+    LastSeen
+)
+VALUES
+(
+    23,
+    'as8986503@gmail.com',
+    '1445217533E7D4D0CFFD9109C4EDB60D62A02C0F0DE9537BE44F5E00D348EB4F',
+    NULL,
+    '2026-03-09 17:38:46.4666667',
+    '2026-03-09 17:38:46.4666667',
+    1,
+    0,
+    '2026-05-09 12:52:09.603'
+),
+
+(
+    25,
+    'goru@gmail.com',
+    '1445217533E7D4D0CFFD9109C4EDB60D62A02C0F0DE9537BE44F5E00D348EB4F',
+    NULL,
+    '2026-03-10 12:18:56.6600000',
+    '2026-03-10 12:18:56.6600000',
+    1,
+    0,
+    '2026-05-11 12:13:37.907'
+)
+
+GO
+
+SET IDENTITY_INSERT [_vender].[User] OFF
+GO
+INSERT INTO [_vender].[Vender]
+(
+    VenderCode,
+    CodeDescription,
+    LotVender,
+    InsertedDate,
+    UpdatedDate,
+    IsActive,
+    IsVerifird,
+    IsAgrementSigned,
+    IsSignupCompleted,
+    Email,
+    UserId,
+    IsDeleted
+)
+VALUES
+(
+    'VENDER23',
+    'Vendor 23',
+    'LOT001',
+    GETDATE(),
+    GETDATE(),
+    1,
+    1,
+    1,
+    1,
+    'as8986503@gmail.com',
+    23,
+    0
+),
+
+(
+    'VENDER25',
+    'Vendor 25',
+    'LOT002',
+    GETDATE(),
+    GETDATE(),
+    1,
+    1,
+    1,
+    1,
+    'goru@gmail.com',
+    25,
+    0
+)
+GO
